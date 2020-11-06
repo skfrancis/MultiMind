@@ -1,0 +1,49 @@
+Create TABLE `lifestream`.`CP` (
+  `CPID` INT NOT NULL ,
+  `Name` VARCHAR(45) NULL ,
+  `Red` INT NOT NULL ,
+  `Green` INT NOT NULL , 
+  `Blue` INT NOT NULL , 
+  PRIMARY KEY (`CPID`) , 
+  UNIQUE INDEX `Name_UNIQUE` (`Name` ASC));
+
+CREATE  TABLE `lifestream`.`users` (
+  `userID` INT NOT NULL AUTO_INCREMENT ,
+  `Name` VARCHAR(45) NOT NULL ,
+  `password` VARCHAR(45) NOT NULL ,
+  `CPID` INT NOT NULL ,
+  `Red` INT NOT NULL ,
+  `Green` INT NOT NULL ,
+  `Blue` INT NOT NULL ,
+  PRIMARY KEY (`userID`) ,
+  INDEX `CPID` (`CPID` ASC) ,
+  CONSTRAINT `CPID`
+  FOREIGN KEY (`CPID` )
+  REFERENCES `lifestream`.`cp` (`CPID` )
+  ON DELETE CASCADE
+  ON UPDATE CASCADE);
+
+CREATE  TABLE `lifestream`.`reports` (
+  `reportID` INT NOT NULL AUTO_INCREMENT ,
+  `userID` INT NOT NULL ,
+  `date` DATETIME NOT NULL ,
+  `test` TEXT NULL ,
+  PRIMARY KEY (`reportID`) ,
+  INDEX `userID` (`userID` ASC) ,
+  CONSTRAINT `userID`
+  FOREIGN KEY (`userID` )
+  REFERENCES `lifestream`.`users` (`userID` )
+  ON DELETE NO CASCADE
+  ON UPDATE NO CASCADE);
+
+CREATE  TABLE `lifestream`.`discussions` (
+  `parentID` INT NOT NULL ,
+  `threadID` INT NOT NULL AUTO_INCREMENT ,
+  `topic` TEXT NOT NULL ,
+  `message` TEXT NOT NULL ,
+  `date` DATETIME NOT NULL ,
+  PRIMARY KEY (`threadID`) );
+
+  
+
+
